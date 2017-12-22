@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="Vocabula.View.Pages.AnsweringView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Vocabula.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <Control.Resources>
+        <Style TargetType="Border" x:Key="HeaderBorderStyle">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Black"/>
+        </Style>
+        <Style TargetType="Border" x:Key="CellBorderStyle">
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="BorderBrush" Value="Gray"/>
+        </Style>
+    </Control.Resources>
+
+    <Grid>
+
+        <!-- Table displayig questions and results -->
+        <DockPanel Grid.Row="1" LastChildFill="True">
+            <Button Content="Check Answers" Command="{Binding CheckAnswersButton.Command}" DockPanel.Dock="Top" VerticalAlignment="Top"/>
+
+            <ListView DockPanel.Dock="Bottom" Grid.Row="1" SelectionMode="Single" HorizontalAlignment="Left" ItemsSource="{Binding Path=QuestionList, UpdateSourceTrigger=PropertyChanged}">
+                <ListView.View>
+                    <GridView>
+                        
+                        <GridViewColumn Header="Question" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="-6,0,-6,0">
+                                        <TextBlock Text="{Binding Question}" Margin="6,0,6,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                        <GridViewColumn Header="Answers" Width="Auto">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="-6,0,-6,0">
+                                        <TextBox Text="{Binding SubmittedAnswer}" MinWidth="100" Width="Auto" Margin="6,0,6,0"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </DockPanel>
+    </Grid>
+</UserControl>
