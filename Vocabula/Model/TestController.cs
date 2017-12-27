@@ -11,6 +11,11 @@ namespace Vocabula.Model
 {
     public class TestController : IAddLearnedWords
     {
+        public TestController()
+        {
+            _memorisableItems.UpdateFromDataStorage();
+        }
+
         public void CheckAnswers()
         {
             _examinationItems.ForEach(item => item.CheckAnswer());
@@ -45,17 +50,17 @@ namespace Vocabula.Model
         /// <returns>Returns false if word already exists</returns>
         public bool TryAddingLearnedAdjective(string questionWord, string answerWord)
         {
-            return _memorisableItems.TryAdd(new MemorisableItem(new AdjectiveWord(questionWord, answerWord)));
+            return _memorisableItems.TryAdd(new AdjectiveWord(questionWord, answerWord));
         }
 
         public bool AddLearnedVerb(PersonalPronounEnum personalPronoun, string questionWord, string answerWord)
         {
-            return _memorisableItems.TryAdd(new MemorisableItem(new VerbWord(personalPronoun, questionWord, answerWord, GetLanguageContext())));
+            return _memorisableItems.TryAdd(new VerbWord(personalPronoun, questionWord, answerWord, GetLanguageContext()));
         }
 
         public bool AddLearnedNoun(GenderEnum gender, string questionWord, string answerWord)
         {
-            return _memorisableItems.TryAdd(new MemorisableItem(new NounWord(gender, questionWord, answerWord, GetLanguageContext())));
+            return _memorisableItems.TryAdd(new NounWord(gender, questionWord, answerWord, GetLanguageContext()));
         }
 
         #endregion
@@ -70,6 +75,6 @@ namespace Vocabula.Model
         /// </summary>
         private List<ExaminationItem> _examinationItems = new List<ExaminationItem>();
 
-        private MemorisableItemStorage _memorisableItems = new MemorisableItemStorage();
+        private MemorisableItemStorage _memorisableItems = new MemorisableItemStorage("TestFile.xml");
     }
 }

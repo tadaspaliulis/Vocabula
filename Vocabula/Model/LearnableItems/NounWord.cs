@@ -8,32 +8,27 @@ using Vocabula.Model.Abstracts;
 
 namespace Vocabula.Model.LearnableItems
 {
-    public class NounWord : IToBeLearnedItem
+    public class NounWord : LearnedItemBase
     {
-        private GenderEnum _nounGender;
-
-        private string _questionWord;
-
-        private string _answerWord;
+        public GenderEnum NounGender { get; private set; }
 
         private IGenderContext _context;
 
         public NounWord(GenderEnum nounGender, string questionWord, string answerWord, IGenderContext genderContext)
+            :base(questionWord, answerWord)
         {
             _context = genderContext;
-            _nounGender = nounGender;
-            _questionWord = questionWord;
-            _answerWord = answerWord;
+            NounGender = nounGender;
         }
 
-        public string GetExpectedResult()
+        public override string GetExpectedResult()
         {
-            return _context.GetAnswerGender(_nounGender) + " " + _answerWord;
+            return _context.GetAnswerGender(NounGender) + " " + AnswerWord;
         }
 
-        public string GetQuestion()
+        public override string GetQuestion()
         {
-            return _context.GetQuestionGender(_nounGender) + " " + _questionWord;
+            return _context.GetQuestionGender(NounGender) + " " + QuestionWord;
         }
     }
 }

@@ -8,32 +8,27 @@ using Vocabula.Model.Abstracts;
 
 namespace Vocabula.Model.LearnableItems
 {
-    public class VerbWord : IToBeLearnedItem
+    public class VerbWord : LearnedItemBase
     {
-        private PersonalPronounEnum _personalPronoun;
-
-        private string _questionWord;
-
-        private string _answerWord;
+        public PersonalPronounEnum PersonalPronoun { get; private set; }
 
         private IPronounContext _context;
 
         public VerbWord(PersonalPronounEnum pronoun, string questionWord, string answerWord, IPronounContext pronounContext)
+            :base (questionWord, answerWord)
         {
             _context = pronounContext;
-            _personalPronoun = pronoun;
-            _questionWord = questionWord;
-            _answerWord = answerWord;
+            PersonalPronoun = pronoun;
         }
 
-        public string GetExpectedResult()
+        public override string GetExpectedResult()
         {
-            return _context.GetAnswerPersonalPronoun(_personalPronoun) + " " + _answerWord;
+            return _context.GetAnswerPersonalPronoun(PersonalPronoun) + " " + AnswerWord;
         }
 
-        public string GetQuestion()
+        public override string GetQuestion()
         {
-            return _context.GetQuestionPersonalPronoun(_personalPronoun) + " " + _questionWord;
+            return _context.GetQuestionPersonalPronoun(PersonalPronoun) + " " + QuestionWord;
         }
     }
 }

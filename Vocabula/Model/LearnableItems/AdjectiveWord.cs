@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 
 namespace Vocabula.Model.LearnableItems
 {
-    class AdjectiveWord : IToBeLearnedItem
+    class AdjectiveWord : LearnedItemBase
     {
-        private string _question;
-        private string _answer;
-
-        public AdjectiveWord(string question, string answer)
+        public AdjectiveWord(string questionWord, string answerWord)
+            : base(questionWord, answerWord)
         {
-            _question = question;
-            _answer = answer;
         }
 
-        public string GetExpectedResult()
+        public override string GetExpectedResult()
         {
-            return _answer;
+            return AnswerWord;
         }
 
-        public string GetQuestion()
+        public override string GetQuestion()
         {
-            return _question;
+            return QuestionWord;
         }
     }
 }
