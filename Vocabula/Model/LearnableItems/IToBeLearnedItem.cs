@@ -11,5 +11,6 @@ namespace Vocabula.Model.LearnableItems
     {
         string GetExpectedResult();
         string GetQuestion();
+        string UniqueId { get; }
     }
 }

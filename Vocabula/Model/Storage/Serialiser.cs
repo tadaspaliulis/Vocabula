@@ -10,30 +10,136 @@ using System.Xml.Serialization;
 
 namespace Vocabula.Model.Storage
 {
-    /// <summary>
-    /// Responsible for serialising the internal learned word data format to the file file format and back
-    /// </summary>
-    public class Serialiser
+    [Serializable]
+    public class WordStatV1
+    {
+        public DateTime DateLearned;
+        public DateTime LastTimeAnswered;
+        public int NumberOfTimesAsked;
+        public int NumberOfTimesAnsweredCorrectly;
+        public string UniqueId;
+    }
+
+    [Serializable]
+    public abstract class BaseDataStorageFileFormat
+    {
+        public DataFileVersionNumber VersionNumber;
+    }
+
+    [Serializable]
+    public class WordStatsListV1 : BaseDataStorageFileFormat
+    {
+        public List<WordStatV1> WordStats;
+    }
+
+    public abstract class BaseDataSerialiser<TDataStoreType> where TDataStoreType : BaseDataStorageFileFormat
+    {
+        protected BaseDataSerialiser(string dataStorePath)
+        {
+            _dataStorePath = dataStorePath;
+            _fileData = NewFileDataObject();
+        }
+
+        private string _dataStorePath;
+        protected TDataStoreType _fileData;
+
+        public void Write()
+        {
+            using (FileStream stream = new FileStream(_dataStorePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+            {
+                XmlSerializer serialiser = new XmlSerializer(typeof(TDataStoreType));
+                serialiser.Serialize(stream, _fileData);
+            }
+        }
+
+        public void Read()
+        {
+            if (!File.Exists(_dataStorePath))
+                return;
+
+            using (FileStream stream = new FileStream(_dataStorePath, FileMode.OpenOrCreate, FileAccess.Read))
+            {
+                XmlSerializer serialiser = new XmlSerializer(typeof(TDataStoreType));
+                _fileData = (TDataStoreType)serialiser.Deserialize(stream);
+            }
+        }
+
+        public void ResetInMemoryFileData()
+        {
+            _fileData = NewFileDataObject();
+        }
+
+        protected abstract TDataStoreType NewFileDataObject();
+    }
+
+    public class StatisticsSerialiser : BaseDataSerialiser<WordStatsListV1>
     {
         private static DataFileVersionNumber CurrentFileVersion = new DataFileVersionNumber(1, 0, 0);
 
-        private string _dataStorePath;
+        public StatisticsSerialiser(string dataStoraPath) : base(dataStoraPath)
+        {
+        }
+
+        public void AddStatisticsItem(Statistics item)
+        {
+            _fileData.WordStats.Add(ConvertToDataRecord(item));
+        }
+        
+        public List<Statistics> GenerateListOfStatistics()
+        {
+            var statsList = new List<Statistics>();
+            foreach (var item in _fileData.WordStats)
+                statsList.Add(ConvertFromDataRecord(item));
+
+            return statsList;
+        }
+
+        protected override WordStatsListV1 NewFileDataObject()
+        {
+            return new WordStatsListV1
+            {
+                VersionNumber = CurrentFileVersion,
+                WordStats = new List<WordStatV1>()
+            };
+        }
+
+        private WordStatV1 ConvertToDataRecord(Statistics item)
+        {
+            return new WordStatV1
+            {
+                DateLearned = item.DateLearned,
+                LastTimeAnswered = item.LastTimeAnswered,
+                NumberOfTimesAnsweredCorrectly = item.NumberOfTimesAnsweredCorrectly,
+                NumberOfTimesAsked = item.NumberOfTimesAsked,
+                UniqueId = item.UniqueId,
+            };
+        }
+
+        private Statistics ConvertFromDataRecord(WordStatV1 item)
+        {
+            return new Statistics
+            {
+                DateLearned = item.DateLearned,
+                LastTimeAnswered = item.LastTimeAnswered,
+                NumberOfTimesAnsweredCorrectly = item.NumberOfTimesAnsweredCorrectly,
+                NumberOfTimesAsked = item.NumberOfTimesAsked,
+                UniqueId = item.UniqueId,
+            };
+        }
+    }
+
+    /// <summary>
+    /// Responsible for serialising the internal learned word data format to the file file format and back
+    /// </summary>
+    public class WordsSerialiser : BaseDataSerialiser<LearnedWordListDataV1>
+    {
+        private static DataFileVersionNumber CurrentFileVersion = new DataFileVersionNumber(1, 0, 0);
 
         private LanguageContext _languageContext;
 
-        private LearnedWordListDataV1 _fileData;
-
-        public Serialiser(string dataStoraPath, LanguageContext context)
+        public WordsSerialiser(string dataStoraPath, LanguageContext context) : base(dataStoraPath)
         {
-            _dataStorePath = dataStoraPath;
             _languageContext = context;
-            _fileData = new LearnedWordListDataV1
-            {
-                VersionNumber = CurrentFileVersion,
-                LearnedAdjectives = new List<LearnedAdjectiveDataRecordV1>(),
-                LearnedNouns = new List<LearnedNounDataRecordV1>(),
-                LearnedVerbs = new List<LearnedVerbDataRecordV1>()
-            };
         }
 
         public void AddItemForSerialisation(IToBeLearnedItem item)
@@ -52,28 +158,6 @@ namespace Vocabula.Model.Storage
                 default:
                     throw new InvalidOperationException("Attempted serializing unsupported type: " + item.GetType());
             }
-        }
-
-        public void Write()
-        {
-            using (FileStream stream = new FileStream(_dataStorePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
-            {
-                XmlSerializer serialiser = new XmlSerializer(typeof(LearnedWordListDataV1));
-                serialiser.Serialize(stream, _fileData);
-            }
-        }
-
-        public void Read()
-        {
-            if (!File.Exists(_dataStorePath))
-                return;
-            
-            using (FileStream stream = new FileStream(_dataStorePath, FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                XmlSerializer serialiser = new XmlSerializer(typeof(LearnedWordListDataV1));
-                _fileData = (LearnedWordListDataV1)serialiser.Deserialize(stream);
-            }
-
         }
 
         public List<IToBeLearnedItem> GenerateListOfLearnedItems()
@@ -138,6 +222,17 @@ namespace Vocabula.Model.Storage
         private IToBeLearnedItem ConvertFromDataRecord(LearnedVerbDataRecordV1 word)
         {
             return new VerbWord(word.PersonalPronoun, word.QuestionWord, word.AnswerWord, _languageContext);
+        }
+
+        protected override LearnedWordListDataV1 NewFileDataObject()
+        {
+            return new LearnedWordListDataV1
+            {
+                VersionNumber = CurrentFileVersion,
+                LearnedAdjectives = new List<LearnedAdjectiveDataRecordV1>(),
+                LearnedNouns = new List<LearnedNounDataRecordV1>(),
+                LearnedVerbs = new List<LearnedVerbDataRecordV1>()
+            };
         }
     }
 

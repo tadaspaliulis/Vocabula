@@ -71,6 +71,7 @@
     <Compile Include="Model\LearnableItems\LearnedItemBase.cs" />
     <Compile Include="Model\LearnableItems\NounWord.cs" />
     <Compile Include="Model\LearnableItems\VerbWord.cs" />
+    <Compile Include="Model\MemorisableItemStorage.cs" />
     <Compile Include="Model\Storage\DataFormats\Version1\LearnedWordListData.cs" />
     <Compile Include="Model\Storage\Serialiser.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedAdjectiveViewModel.cs" />

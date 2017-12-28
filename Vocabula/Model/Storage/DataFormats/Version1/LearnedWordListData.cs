@@ -58,59 +58,10 @@ namespace Vocabula.Model.Storage.DataFormats.Version1
     }
 
     [Serializable]
-    public class LearnedWordListDataV1
+    public class LearnedWordListDataV1 : BaseDataStorageFileFormat
     {
-        public DataFileVersionNumber VersionNumber;
-
         public List<LearnedNounDataRecordV1> LearnedNouns;
         public List<LearnedVerbDataRecordV1> LearnedVerbs;
         public List<LearnedAdjectiveDataRecordV1> LearnedAdjectives;
-    }
-
-    public class DataRecordWriter
-    {
-        public void Setup()
-        {
-            _dataForWriting = new LearnedWordListDataV1
-            {
-                LearnedAdjectives = new List<LearnedAdjectiveDataRecordV1>(),
-                LearnedNouns = new List<LearnedNounDataRecordV1>(),
-                LearnedVerbs = new List<LearnedVerbDataRecordV1>()
-            };
-
-            _dataForWriting.LearnedAdjectives.Add(new LearnedAdjectiveDataRecordV1
-            {
-                AnswerWord = "Answer",
-                QuestionWord = "Question",
-                UniqueId = "Question",
-            });
-            _dataForWriting.LearnedNouns.Add(new LearnedNounDataRecordV1
-            {
-                AnswerWord = "NounAnswer",
-                QuestionWord = "NounQuestion",
-                Gender = GenderEnum.Masculine,
-                UniqueId = "Very Unique Id"
-            });
-        }
-
-        public void Write()
-        {
-            using (FileStream stream = new FileStream("TestFile.xml", FileMode.OpenOrCreate, FileAccess.ReadWrite))
-            {
-                XmlSerializer serialiser = new XmlSerializer(typeof(LearnedWordListDataV1));
-                serialiser.Serialize(stream, _dataForWriting);
-            }
-        }
-
-        public void Read()
-        {
-            using (FileStream stream = new FileStream("TestFile.xml", FileMode.OpenOrCreate, FileAccess.Read))
-            {
-                XmlSerializer serialiser = new XmlSerializer(typeof(LearnedWordListDataV1));
-                _dataForWriting = (LearnedWordListDataV1)serialiser.Deserialize(stream);
-            }
-        }
-
-        private LearnedWordListDataV1 _dataForWriting;
     }
 }

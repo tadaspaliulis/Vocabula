@@ -18,6 +18,9 @@ namespace Vocabula.Model
         public void CheckAnswer()
         {
             IsAnswerCorrect = string.Compare(_memorisableItem.GetTheAnswer(), SubmittedAnswer, true) == 0;
+
+            //Update the stats for this word
+            UpdateStatistics();
         }
 
         public string Question
@@ -38,6 +41,16 @@ namespace Vocabula.Model
 
         public string SubmittedAnswer { get; set; }
         public bool IsAnswerCorrect { get; private set; }
+
+        private void UpdateStatistics()
+        {
+            var stats = _memorisableItem.statistics;
+
+            stats.LastTimeAnswered = DateTime.Now;
+            stats.NumberOfTimesAsked += 1;
+            if (IsAnswerCorrect)
+                stats.NumberOfTimesAnsweredCorrectly += 1;
+        }
 
         private MemorisableItem _memorisableItem;
     }

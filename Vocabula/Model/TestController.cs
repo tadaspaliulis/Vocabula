@@ -19,6 +19,9 @@ namespace Vocabula.Model
         public void CheckAnswers()
         {
             _examinationItems.ForEach(item => item.CheckAnswer());
+
+            //Record the results to the file system
+            _memorisableItems.WriteStatsToStorage();
         }
 
         public List<ExaminationItem> GetCurrentListOfExaminationItems()
