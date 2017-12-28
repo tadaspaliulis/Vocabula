@@ -15,16 +15,15 @@ namespace Vocabula.ViewModel.LearnedWordControls
 
         private void AddWordInternal()
         {
-            string errorMessage;
-            if (!CheckIfDataValid(out errorMessage))
+            if (!CheckIfDataValid(out string errorMessage))
             {
                 //Input validation failed
-                InvokeWordAddEvent(errorMessage); 
+                InvokeWordAddEvent(errorMessage);
                 return;
             }
 
             //Try adding the new word
-            if(!AddWord()) 
+            if (!AddWord()) 
             {
                 //If false, the word already exists in the dictionary!
                 InvokeWordAddEvent(GetDisplayableQuestionWord() + " has already been learned.");
@@ -76,6 +75,7 @@ namespace Vocabula.ViewModel.LearnedWordControls
                 NotifyPropertyChanged();
             }
         }
+
         #endregion
     }
 }
