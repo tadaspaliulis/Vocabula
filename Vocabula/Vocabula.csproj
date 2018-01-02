@@ -74,6 +74,7 @@
     <Compile Include="Model\LearnableItems\VerbWord.cs" />
     <Compile Include="Model\MemorisableItemStorage.cs" />
     <Compile Include="Model\StatisticsBasedWeightCalculator.cs" />
+    <Compile Include="Model\Storage\DataFormats\DataFileVersionNumber.cs" />
     <Compile Include="Model\Storage\DataFormats\Version1\LearnedWordListData.cs" />
     <Compile Include="Model\Storage\Serialiser.cs" />
     <Compile Include="Model\WeighedRandomItemSelector.cs" />

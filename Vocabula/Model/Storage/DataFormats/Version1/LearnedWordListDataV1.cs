@@ -35,28 +35,8 @@ namespace Vocabula.Model.Storage.DataFormats.Version1
     }
 
     /// <summary>
-    /// File version as stored in the data file, should inherit from IComparable once several file types are supported
+    /// Represents the XML structure of the learned words file
     /// </summary>
-    [Serializable]
-    public class DataFileVersionNumber
-    {
-        public DataFileVersionNumber()
-        {
-
-        }
-
-        public DataFileVersionNumber(int version, int major, int minor)
-        {
-            Version = version;
-            Major = major;
-            Minor = minor;
-        }
-
-        public int Version;
-        public int Major;
-        public int Minor;
-    }
-
     [Serializable]
     public class LearnedWordListDataV1 : BaseDataStorageFileFormat
     {
