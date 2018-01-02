@@ -59,6 +59,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Abstracts\IAddLearnedWords.cs" />
+    <Compile Include="Model\Abstracts\IWeightCalculator.cs" />
     <Compile Include="Model\Enums\GenderEnum.cs" />
     <Compile Include="Model\Enums\LearnedWordTypeEnum.cs" />
     <Compile Include="Model\Enums\PersonalPronounEnum.cs" />
@@ -72,8 +73,10 @@
     <Compile Include="Model\LearnableItems\NounWord.cs" />
     <Compile Include="Model\LearnableItems\VerbWord.cs" />
     <Compile Include="Model\MemorisableItemStorage.cs" />
+    <Compile Include="Model\StatisticsBasedWeightCalculator.cs" />
     <Compile Include="Model\Storage\DataFormats\Version1\LearnedWordListData.cs" />
     <Compile Include="Model\Storage\Serialiser.cs" />
+    <Compile Include="Model\WeighedRandomItemSelector.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedAdjectiveViewModel.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedNounViewModel.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedVerbViewModel.cs" />

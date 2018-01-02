@@ -52,6 +52,9 @@ namespace Vocabula.Model
 
             _wordSerialiser = new WordsSerialiser(dataStoragePath, _germanLanguageContext);
             _statsSerialiser = new StatisticsSerialiser("StatsTest.xml");
+
+            var seed = Environment.TickCount;
+            _itemSelector = new WeighedRandomItemSelector<MemorisableItem>(_loadedItems, new Random((int)seed), new StatisticsBasedWeightCalculator());
         }
 
         public bool TryAdd(IToBeLearnedItem item)
@@ -122,7 +125,7 @@ namespace Vocabula.Model
 
         public List<MemorisableItem> GetItemList(int count)
         {
-            return _loadedItems;
+            return _itemSelector.GetRandomItems(count);
         }
 
         public LanguageContext GetLanguageContext()
@@ -142,6 +145,8 @@ namespace Vocabula.Model
         private List<MemorisableItem> _loadedItems = new List<MemorisableItem>();
 
         private LanguageContext _germanLanguageContext;
+
+        private WeighedRandomItemSelector<MemorisableItem> _itemSelector;
 
         private WordsSerialiser _wordSerialiser;
 
