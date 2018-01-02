@@ -74,10 +74,15 @@
     <Compile Include="Model\LearnableItems\VerbWord.cs" />
     <Compile Include="Model\MemorisableItemStorage.cs" />
     <Compile Include="Model\StatisticsBasedWeightCalculator.cs" />
+    <Compile Include="Model\Storage\BaseDataSerialiser.cs" />
+    <Compile Include="Model\Storage\DataFormats\BaseDataStorageFileFormat.cs" />
     <Compile Include="Model\Storage\DataFormats\DataFileVersionNumber.cs" />
-    <Compile Include="Model\Storage\DataFormats\Version1\LearnedWordListData.cs" />
-    <Compile Include="Model\Storage\Serialiser.cs" />
+    <Compile Include="Model\Storage\DataFormats\Version1\LearnedWordListDataV1.cs" />
+    <Compile Include="Model\Storage\DataFormats\Version1\WordStatsListV1.cs" />
+    <Compile Include="Model\Storage\WordsSerialiser.cs" />
+    <Compile Include="Model\Storage\StatisticsSerialiser.cs" />
     <Compile Include="Model\WeighedRandomItemSelector.cs" />
+    <Compile Include="Model\WordStatistics.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedAdjectiveViewModel.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedNounViewModel.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedVerbViewModel.cs" />

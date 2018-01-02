@@ -65,7 +65,7 @@ namespace Vocabula.Model
                 return false;
 
             //Generate a new statistics item for this
-            var wordStats = new Statistics
+            var wordStats = new WordStatistics
             {
                 DateLearned = DateTime.Now,
                 NumberOfTimesAnsweredCorrectly = 0,

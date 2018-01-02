@@ -19,14 +19,14 @@ namespace Vocabula.Model.Storage
         {
         }
 
-        public void AddStatisticsItem(Statistics item)
+        public void AddStatisticsItem(WordStatistics item)
         {
             _fileData.WordStats.Add(ConvertToDataRecord(item));
         }
 
-        public List<Statistics> GenerateListOfStatistics()
+        public List<WordStatistics> GenerateListOfStatistics()
         {
-            var statsList = new List<Statistics>();
+            var statsList = new List<WordStatistics>();
             foreach (var item in _fileData.WordStats)
                 statsList.Add(ConvertFromDataRecord(item));
 
@@ -42,7 +42,7 @@ namespace Vocabula.Model.Storage
             };
         }
 
-        private WordStatV1 ConvertToDataRecord(Statistics item)
+        private WordStatV1 ConvertToDataRecord(WordStatistics item)
         {
             return new WordStatV1
             {
@@ -54,9 +54,9 @@ namespace Vocabula.Model.Storage
             };
         }
 
-        private Statistics ConvertFromDataRecord(WordStatV1 item)
+        private WordStatistics ConvertFromDataRecord(WordStatV1 item)
         {
-            return new Statistics
+            return new WordStatistics
             {
                 DateLearned = item.DateLearned,
                 LastTimeAnswered = item.LastTimeAnswered,

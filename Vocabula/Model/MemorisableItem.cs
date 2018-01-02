@@ -7,18 +7,9 @@ using Vocabula.Model.LearnableItems;
 
 namespace Vocabula.Model
 {    
-    public class Statistics
-    {
-        public DateTime DateLearned;
-        public DateTime LastTimeAnswered;
-        public int NumberOfTimesAsked;
-        public int NumberOfTimesAnsweredCorrectly;
-        public string UniqueId;
-    }
-
     public class MemorisableItem
     {
-        public MemorisableItem(IToBeLearnedItem toBeLearnedItem, Statistics stats)
+        public MemorisableItem(IToBeLearnedItem toBeLearnedItem, WordStatistics stats)
         {
             _toBeLearned = toBeLearnedItem;
             statistics = stats;
@@ -44,7 +35,7 @@ namespace Vocabula.Model
             return _toBeLearned;
         }
 
-        public Statistics statistics;
+        public WordStatistics statistics;
 
         private IToBeLearnedItem _toBeLearned;
 
