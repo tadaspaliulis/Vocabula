@@ -11,8 +11,16 @@ namespace Vocabula.Model
 {
     public class TestController : IAddLearnedWords
     {
+        
         public TestController()
         {
+            //Make sure the directory exists
+            var vocabulaPath = UserDirectoryManager.CreateDirectory(VocabulaDirectories.VocabulaUserDocuments);
+
+            _memorisableItems = new MemorisableItemStorage(
+                wordsFilePath: UserDirectoryManager.GetFilePath(VocabulaFiles.WordsFile),
+                statsFilePath: UserDirectoryManager.GetFilePath(VocabulaFiles.StatisticsFile));
+
             _memorisableItems.UpdateFromDataStorage();
         }
 
@@ -78,6 +86,6 @@ namespace Vocabula.Model
         /// </summary>
         private List<ExaminationItem> _examinationItems = new List<ExaminationItem>();
 
-        private MemorisableItemStorage _memorisableItems = new MemorisableItemStorage("TestFile.xml");
+        private MemorisableItemStorage _memorisableItems;
     }
 }

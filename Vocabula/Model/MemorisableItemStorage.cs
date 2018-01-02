@@ -11,7 +11,7 @@ namespace Vocabula.Model
 {
     public class MemorisableItemStorage
     {
-        public MemorisableItemStorage(string dataStoragePath)
+        public MemorisableItemStorage(string wordsFilePath, string statsFilePath)
         {
             _germanLanguageContext = new LanguageContext(
                questionGenderMap: new Dictionary<GenderEnum, string>
@@ -50,8 +50,8 @@ namespace Vocabula.Model
                }
                );
 
-            _wordSerialiser = new WordsSerialiser(dataStoragePath, _germanLanguageContext);
-            _statsSerialiser = new StatisticsSerialiser("StatsTest.xml");
+            _wordSerialiser = new WordsSerialiser(wordsFilePath, _germanLanguageContext);
+            _statsSerialiser = new StatisticsSerialiser(statsFilePath);
 
             var seed = Environment.TickCount;
             _itemSelector = new WeighedRandomItemSelector<MemorisableItem>(_loadedItems, new Random((int)seed), new StatisticsBasedWeightCalculator());

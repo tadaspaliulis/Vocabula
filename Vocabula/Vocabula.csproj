@@ -81,6 +81,7 @@
     <Compile Include="Model\Storage\DataFormats\Version1\WordStatsListV1.cs" />
     <Compile Include="Model\Storage\WordsSerialiser.cs" />
     <Compile Include="Model\Storage\StatisticsSerialiser.cs" />
+    <Compile Include="Model\UserDirectoryManager.cs" />
     <Compile Include="Model\WeighedRandomItemSelector.cs" />
     <Compile Include="Model\WordStatistics.cs" />
     <Compile Include="ViewModel\LearnedWordControls\LearnedAdjectiveViewModel.cs" />
