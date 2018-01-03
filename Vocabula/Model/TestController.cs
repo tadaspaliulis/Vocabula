@@ -32,6 +32,11 @@ namespace Vocabula.Model
             _memorisableItems.WriteStatsToStorage();
         }
 
+        public int GetNumberOfKnownItems()
+        {
+            return _memorisableItems.GetNumberOfKnownItems();
+        }
+
         public List<ExaminationItem> GetCurrentListOfExaminationItems()
         {
             if (_examinationItems.Count == 0)

@@ -10,7 +10,7 @@ namespace Vocabula.ViewModel.LearnedWordControls
     {
         protected LearnedWordBaseViewModel()
         {
-            _addWordButton = new ObservableButton(new Command((a) => { return true; }, (a) => AddWordInternal()), null);
+            _addWordCommand = new Command((a) => { return true; }, (a) => AddWordInternal());
         }
 
         private void AddWordInternal()
@@ -62,16 +62,16 @@ namespace Vocabula.ViewModel.LearnedWordControls
 
         #region UI Properties
 
-        private ObservableButton _addWordButton;
-        public ObservableButton AddWordButton
+        private Command _addWordCommand;
+        public Command AddWordCommand
         {
             get
             {
-                return _addWordButton;
+                return _addWordCommand;
             }
             private set
             {
-                _addWordButton = value;
+                _addWordCommand = value;
                 NotifyPropertyChanged();
             }
         }

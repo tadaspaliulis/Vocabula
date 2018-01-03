@@ -62,15 +62,19 @@ namespace Vocabula.ViewModel
             }
         }
 
-        private void OnCanExecuteStateChanged(object sender, System.EventArgs e)
+        public void RecheckIfEnabled()
         {
-            Enabled = _buttonCommand.CanExecute(_stateObject);
+            //Enabled = _buttonCommand.CanExecute(_stateObject);
+            //_buttonCommand.CanExecuteChanged();
+            OnCanExecuteStateChanged(this, new EventArgs());
         }
 
-        private void OnExecutionStatusChangeChanged(object sender, CommandExecutionStatus status)
+        private void OnCanExecuteStateChanged(object sender, System.EventArgs e)
         {
-            Enabled = _buttonCommand.CanExecute(_stateObject);
+            
         }
+
+ 
 
         private ICommand _buttonCommand;
         private object _stateObject;

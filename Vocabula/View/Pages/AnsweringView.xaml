@@ -22,7 +22,7 @@
 
         <!-- Table displayig questions and results -->
         <DockPanel Grid.Row="1" LastChildFill="True">
-            <Button Content="Check Answers" Command="{Binding CheckAnswersButton.Command}" DockPanel.Dock="Top" VerticalAlignment="Top"/>
+            <Button Content="Check Answers" Command="{Binding CheckAnswersCommand}" DockPanel.Dock="Top" VerticalAlignment="Top"/>
 
             <ListView DockPanel.Dock="Bottom" Grid.Row="1" SelectionMode="Single" HorizontalAlignment="Left" ItemsSource="{Binding Path=QuestionList, UpdateSourceTrigger=PropertyChanged}">
                 <ListView.View>

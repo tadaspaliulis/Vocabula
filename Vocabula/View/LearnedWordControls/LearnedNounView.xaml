@@ -32,6 +32,6 @@
             <TextBox Text="{Binding AnswerNoun}" MinWidth="100" Grid.Row="2" Grid.Column="1"/>
         </StackPanel>
             
-        <Button Command="{Binding AddWordButton.Command}" Grid.Row="3" Grid.ColumnSpan="2" Margin="10" Content="Add Word" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        <Button Command="{Binding AddWordCommand}" Grid.Row="3" Grid.ColumnSpan="2" Margin="10" Content="Add Word" HorizontalAlignment="Center" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

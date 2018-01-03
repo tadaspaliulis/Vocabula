@@ -18,7 +18,7 @@ namespace Vocabula.ViewModel.Pages
             _testController = tester;
             _viewSwitcher = viewSwitcher;
             GetListOfExaminationItems();
-            CheckAnswersButton = new ObservableButton(new Command((a) => { return true; }, (a) => CheckAnswers()), null);
+            CheckAnswersCommand = new Command((a) => { return true; }, (a) => CheckAnswers());
         }
 
         private void GetListOfExaminationItems()
@@ -40,16 +40,16 @@ namespace Vocabula.ViewModel.Pages
 
         #region UI Properties
 
-        private ObservableButton _checkAnswersButton;
-        public ObservableButton CheckAnswersButton
+        private Command _checkAnswersCommand;
+        public Command CheckAnswersCommand
         {
             get
             {
-                return _checkAnswersButton;
+                return _checkAnswersCommand;
             }
             private set
             {
-                _checkAnswersButton = value;
+                _checkAnswersCommand = value;
                 NotifyPropertyChanged();
             }
 

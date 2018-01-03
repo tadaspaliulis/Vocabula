@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Vocabula.Model;
 using Vocabula.Model.Enums;
 using Vocabula.ViewModel.LearnedWordControls;
@@ -14,12 +15,14 @@ namespace Vocabula.ViewModel.Pages
     {
         private IViewSwitcher _viewSwitcher;
         private TestController _testController;
-
         public LearnedItemsAddViewModel(TestController testController, IViewSwitcher viewSwitcher)
         {
             _viewSwitcher = viewSwitcher;
-            _questionsButton = new ObservableButton(new Command((a) => { return true; }, (a) => StartAnsweringMode()), null);
             _testController = testController;
+
+            GetQuestionsCommand = new Command(
+                CanExecute: (a) => { return _testController.GetNumberOfKnownItems() != 0; },
+                Execute: (a) => StartAnsweringMode());
 
             foreach (var en in Enum.GetValues(typeof(LearnedWordTypeEnum)))
                 _allowedWordTypes.Add((LearnedWordTypeEnum)en);
@@ -37,6 +40,9 @@ namespace Vocabula.ViewModel.Pages
         private void LearnedControlMessageHandler(object sender, string message)
         {
             MessageDisplay = message;
+            
+            //Force the CanExecute to re-evaluate
+            GetQuestionsCommand.RaiseCanExecuteChangedEvent();
         }
 
         /// <summary>
@@ -124,20 +130,20 @@ namespace Vocabula.ViewModel.Pages
             }
         }
 
-        private ObservableButton _questionsButton;
-        public ObservableButton QuestionsButton
+        private Command _getQuestionsCommand;
+        public Command GetQuestionsCommand
         {
             get
             {
-                return _questionsButton;
+                return _getQuestionsCommand;
             }
-            private set
+            set
             {
-                _questionsButton = value;
+                _getQuestionsCommand = value;
                 NotifyPropertyChanged();
             }
         }
-
+       
         #endregion
     }
 }

@@ -30,8 +30,8 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button Content="Get Questions" Command="{Binding QuestionsButton.Command}" Grid.Column="0"/>
-                <Button Content="Learned Words" Command="{Binding LearnedWordsButton.Command}" Grid.Column="1"/>
+                <Button Content="Get Questions" Command="{Binding QuestionsCommand}" Grid.Column="0"/>
+                <Button Content="Learned Words" Command="{Binding LearnedWordsCommand}" Grid.Column="1"/>
             </Grid>
 
             <ListView Grid.Row="1" SelectionMode="Single" HorizontalAlignment="Left" ItemsSource="{Binding Path=QuestionList, UpdateSourceTrigger=PropertyChanged}">

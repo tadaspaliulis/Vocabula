@@ -17,8 +17,8 @@ namespace Vocabula.ViewModel.Pages
         {
             _testController = tester;
             _viewSwitcher = viewSwitcher;
-            _questionsButton = new ObservableButton(new Command((a) => { return true; }, (a) => StartAnsweringMode()), null);
-            _learnedWordsButton = new ObservableButton(new Command((a) => { return true; }, (a) => StartLearnedWordsMode()), null);
+            _questionsCommand = new Command((a) => { return true; }, (a) => StartAnsweringMode());
+            _learnedWordsCommand = new Command((a) => { return true; }, (a) => StartLearnedWordsMode());
             RefreshListOfExaminationItems();
         }
 
@@ -56,30 +56,30 @@ namespace Vocabula.ViewModel.Pages
             }
         }
 
-        private ObservableButton _questionsButton;
-        public ObservableButton QuestionsButton
+        private Command _questionsCommand;
+        public Command QuestionsCommand
         {
             get
             {
-                return _questionsButton;
+                return _questionsCommand;
             }
             private set
             {
-                _questionsButton = value;
+                _questionsCommand = value;
                 NotifyPropertyChanged();
             }
         }
 
-        private ObservableButton _learnedWordsButton;
-        public ObservableButton LearnedWordsButton
+        private Command _learnedWordsCommand;
+        public Command LearnedWordsCommand
         {
             get
             {
-                return _learnedWordsButton;
+                return _learnedWordsCommand;
             }
             private set
             {
-                _learnedWordsButton = value;
+                _learnedWordsCommand = value;
                 NotifyPropertyChanged();
             }
         }

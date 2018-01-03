@@ -7,13 +7,7 @@ using System.Windows.Input;
 
 namespace Vocabula.ViewModel
 {
-    internal enum CommandExecutionStatus
-    {
-        EStartedExecution,
-        EExecutionFailed,
-    }
-
-    internal class Command : ICommand
+    public class Command : ICommand
     {
         public Command(Func<object, bool> CanExecute, Action<object> Execute)
         {
@@ -36,11 +30,13 @@ namespace Vocabula.ViewModel
             _execute(parameter);
         }
 
-        public void StateChangeHandler(object sender, System.EventArgs e)
+        /// <summary>
+        /// Forces the re-evaluation of the CanExecute function.
+        /// NOTE: Can only be called from the UI thread.
+        /// </summary>
+        public void RaiseCanExecuteChangedEvent()
         {
-            //THIS IS REALLY TERRIBLE :( need to do something about it
-            foreach (EventHandler handler in CanExecuteChanged.GetInvocationList())
-                handler.BeginInvoke(sender, e, null, null);
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         protected Action<object> _execute;

@@ -12,11 +12,8 @@ namespace Vocabula.ViewModel
     {
         public ViewOrchestrator()
         {
-            ViewModel = new EntryPointViewModel(this);
+            SwitchView(ViewList.EntryPoint);
         }
-
-        public ObservableButton GetQuestionsButton { get; set; }
-        public ObservableButton CheckAnswersButton { get; set; }
 
         private bool _isAnsweringMode = false;
         public bool IsAnsweringMode
@@ -46,21 +43,12 @@ namespace Vocabula.ViewModel
             }
         }
 
-        private void CheckAnswers()
-        {
-            /*IsAnsweringMode = false;
-            foreach(var item in _QuestionList)
-            {
-                item.CheckIfAnswerCorrect();
-            }*/
-        }
-
         public void SwitchView(ViewList view)
         {
             switch(view)
             {
                 case ViewList.EntryPoint:
-                    ViewModel = new EntryPointViewModel(this);
+                    ViewModel = new EntryPointViewModel(this, _testController.GetNumberOfKnownItems());
                     break;
                 case ViewList.AnsweringView:
                     ViewModel = new AnsweringViewModel(_testController, this);

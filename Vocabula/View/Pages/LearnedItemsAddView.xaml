@@ -23,7 +23,7 @@
     
     <Grid>
         <StackPanel Orientation="Vertical">
-            <Button Content="Get Questions" Command="{Binding QuestionsButton.Command}" VerticalAlignment="Top"/>
+            <Button Content="Get Questions" Command="{Binding GetQuestionsCommand}"  VerticalAlignment="Top"/>
             <ComboBox SelectedItem="{Binding LearnedWordTypeSelection}" ItemsSource="{Binding AllowedWordTypes}"/>
             <TextBlock Text="{Binding MessageDisplay}" Margin="4"/>
             <DockPanel LastChildFill="True" Margin="4">
